@@ -5,6 +5,6 @@ import { PasswordService } from 'src/service/password.service';
 @Module({
   imports: [RepositoryModule],
   providers: [PasswordService],
-  exports: [PasswordService]
+  exports: [PasswordService],
 })
 export class ServiceModule {}

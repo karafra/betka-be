@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient } from 'mongodb';
 
 const MONGO_URL = process.env.MONGO_URI;
 

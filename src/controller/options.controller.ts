@@ -5,11 +5,8 @@ import { PasswordRepository } from 'src/repository/password.repository';
 @ApiTags('options')
 @Controller('api/options')
 export class OptionsController {
-  constructor(
-    private readonly passwordRepository: PasswordRepository,
-  ) {
-  }
-  
+  constructor(private readonly passwordRepository: PasswordRepository) {}
+
   @Get('countries')
   @ApiOkResponse({
     description: 'On operation success',

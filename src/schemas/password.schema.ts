@@ -52,7 +52,6 @@ export class Password {
     alias: 'User_count',
     type: mongoose.Schema.Types.String,
   })
-  
   @ApiProperty({
     description: 'How many users use this password',
     type: Number,

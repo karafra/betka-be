@@ -1,4 +1,12 @@
-import { Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PasswordRepository } from 'src/repository/password.repository';
 import { Password } from 'src/schemas/password.schema';
@@ -6,11 +14,8 @@ import { Password } from 'src/schemas/password.schema';
 @ApiTags('Passwords')
 @Controller('api/passwords')
 export class PasswordController {
-  constructor(
-    private readonly passwordRepository: PasswordRepository,
-  ) {
-  }
-  
+  constructor(private readonly passwordRepository: PasswordRepository) {}
+
   @ApiOperation({
     description: 'Retrieves all passwords',
   })
@@ -24,7 +29,7 @@ export class PasswordController {
   async getAllPasswords() {
     return await this.passwordRepository.getAll();
   }
-  
+
   @ApiOperation({
     description: 'Retrieves all passwords between start and end indices',
   })
@@ -43,15 +48,22 @@ export class PasswordController {
     @Query('start') startIndex: number,
     @Query('end') endIndex: number,
   ) {
-    const passwords = await this.passwordRepository.getPage(startIndex, endIndex);
+    const passwords = await this.passwordRepository.getPage(
+      startIndex,
+      endIndex,
+    );
     if (!passwords) {
-      throw new HttpException('Start must be smaller than end', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Start must be smaller than end',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     return passwords;
   }
-  
+
   @ApiOperation({
-    description: 'Retrieves all passwords with matching country. Country is case insensitive',
+    description:
+      'Retrieves all passwords with matching country. Country is case insensitive',
   })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -63,10 +75,10 @@ export class PasswordController {
   async getByCountry(@Param('country') country: string) {
     return await this.passwordRepository.getByCountry(country);
   }
-  
-  
+
   @ApiOperation({
-    description: 'Retrieves all passwords with crack time better than the one provided.',
+    description:
+      'Retrieves all passwords with crack time better than the one provided.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -75,11 +87,12 @@ export class PasswordController {
     isArray: true,
   })
   @Get('crack-time/:crackTime')
-  async getByCrackTime(@Param('crackTime', new ParseIntPipe()) crackTime: number) {
+  async getByCrackTime(
+    @Param('crackTime', new ParseIntPipe()) crackTime: number,
+  ) {
     return this.passwordRepository.getPasswordByCrackTime(crackTime);
   }
-  
-  
+
   @ApiQuery({
     name: 'amount',
     description: 'How many objects is to be returned (default 10)',
@@ -91,7 +104,11 @@ export class PasswordController {
     required: false,
   })
   @Get('top-by/:parameterName')
-  async getTopByParameter(@Param('parameterName') parameter: string, @Query('amount') amount = 10, @Query('distinct') distinct = true) {
+  async getTopByParameter(
+    @Param('parameterName') parameter: string,
+    @Query('amount') amount = 10,
+    @Query('distinct') distinct = true,
+  ) {
     return this.passwordRepository.getTopBy(parameter, amount);
   }
 }

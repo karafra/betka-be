@@ -25,6 +25,6 @@ import loader from './config/loader';
     RepositoryModule,
     ControllerModule,
   ],
-  controllers: [PasswordController]
+  controllers: [PasswordController],
 })
 export class AppModule {}

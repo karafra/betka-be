@@ -8,6 +8,4 @@ import { ServiceModule } from 'src/service/service.module';
   imports: [ServiceModule, RepositoryModule],
   controllers: [PasswordController, OptionsController],
 })
-export class ControllerModule {
-
-}
+export class ControllerModule {}

@@ -6,12 +6,12 @@ import { join } from 'path';
 import * as path from 'path';
 import { AppModule } from './app.module';
 
-const packageJson = require(join(__dirname, '..', 'package.json'))
+const packageJson = require(join(__dirname, '..', 'package.json'));
 const logger = new Logger(path.basename(__filename).split('.')[0]);
 let port;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: true});
+  const app = await NestFactory.create(AppModule, { cors: true });
   const config = new DocumentBuilder()
     .setTitle(packageJson.name)
     .setDescription(packageJson.description)
@@ -19,10 +19,10 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
+
   const configService = app.get<ConfigService>(ConfigService);
   port = configService.get<number>('server.port') || 3000;
-  
+
   await app.listen(port);
 }
 
